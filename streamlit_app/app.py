@@ -26,8 +26,8 @@ if st.button("Generate & Deploy"):
     }
     with open("test1.txt", "w") as f:
         f.write("This is a test file.")
-    subprocess.run(["git","add","dash-hello-world-app/test1.txt"])
-    subprocess.run(["git","commit","-m",f"Add {layer}_poc pipeline"])
+    subprocess.run(["git","add","streamlit_app/test1.txt"])
+    subprocess.run(["git","commit","-m","streamlit_app/test1.txt"])
     subprocess.run(["git","push"])
 
 
