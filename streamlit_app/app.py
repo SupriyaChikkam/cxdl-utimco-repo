@@ -1,5 +1,5 @@
 import streamlit as st
-import yaml, subprocess
+import subprocess
 
 st.title("Autoloader Configurator")
 
