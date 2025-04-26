@@ -24,11 +24,32 @@ if st.button("Generate & Deploy"):
       "ingest_mode": mode,
       "partition_column": part or None
     }
-    with open("test1.txt", "w") as f:
-        f.write("This is a test file.")
-    subprocess.run(["git","add","streamlit_app/test1.txt"])
-    subprocess.run(["git","commit","-m","streamlit_app/test1.txt"])
-    subprocess.run(["git","push"])
+    repo_owner = "supriya.chikkam@cxdatalabs.com"
+    repo_name  = "cxdl-utimco-repo"
+    path       = "streamlit_app/test1.txt"
+    url        = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}"
+    
+    data = {
+      "message": f"Add {layer}_poc pipeline",
+      "content": encoded,
+      "branch": "main",           # optional, defaults to default branch
+      "sha":     "<old-sha-if-updating>"
+    }
+
+    # 4) call
+    headers = {"Authorization": f"token {st.secrets['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']}"}
+    r = requests.put(url, json=data, headers=headers)
+
+    if r.status_code in (200, 201):
+        st.success("✅ test1.txt created in GitHub!")
+    else:
+        st.error(f"GitHub API error {r.status_code}: {r.json()}")
+    
+    # with open("test1.txt", "w") as f:
+    #     f.write("This is a test file.")
+    # subprocess.run(["git","add","streamlit_app/test1.txt"])
+    # subprocess.run(["git","commit","-m","streamlit_app/test1.txt"])
+    # subprocess.run(["git","push"])
 
 
     # with open("dash-hello-world-app/configs/bronze_poc.yaml", "w") as f:
